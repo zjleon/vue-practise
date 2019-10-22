@@ -8,6 +8,7 @@
 ##### lauch chrome with:
 1. ubuntu: ``google-chrome --unsafely-treat-insecure-origin-as-secure=https://localhost --allow-insecure-localhost --ignore-certificate-errors``
 2. windows:
+3. After launched, enable cache in the network panel and debug the service worker using the ``application-service worker``
 
 ##### config nginx:
 1. go into this folder via terminal, type ``pwd``
