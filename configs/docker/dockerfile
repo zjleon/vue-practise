@@ -1,0 +1,5 @@
+
+FROM nginx
+RUN mkdir /app /usr/local/nginx /usr/local/nginx/logs
+COPY ./dist/ /app
+COPY ./configs/nginx/server.conf /etc/nginx/nginx.conf

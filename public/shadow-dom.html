@@ -1,0 +1,52 @@
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+  </head>
+  <body>
+    <style>h1{color:green}</style>
+    <custom-node disabled>
+      <h1 class="red">h1 in custom node 1</h1>
+      <span slot="content">sentence 1 in custom node 1,<b>inline word</b></span>
+      <span slot="content">sentence 2 in custom node 1,</span>
+    </custom-node>
+    <custom-node>
+      <h1>h1 in custom node 2</h1>
+      <span slot="content">sentence 1 in custom node 2,</span>
+      <span slot="content">sentence 2 in custom node 2,</span>
+    </custom-node>
+    <script>
+      customElements.define('custom-node', class extends HTMLElement {
+        constructor() {
+          super()
+
+          const shadowRoot = this.attachShadow({mode: 'open'})
+          shadowRoot.innerHTML = `
+            <style>
+              .red{color:red}
+              .disabled-text{
+                display: none;
+              }
+              :host([disabled]) .disabled-text{
+                display: block;
+              }
+              ::slotted(span) {
+                color: blue
+              }
+              ::slotted(span) b{
+                color: #eee;
+              }
+            </style>
+            <slot name="content">default content</slot>
+            <h1 class="red">h1 in shadow dom</h1>
+            <slot>
+            </slot>
+            <p class="disabled-text">a disabled text</p>
+          `
+        }
+      })
+    </script>
+  </body>
+  </html>
