@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import {HomeModule} from './Home'
-console.log(222, HomeModule)
 
 Vue.use(Vuex)
 
