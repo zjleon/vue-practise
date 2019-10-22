@@ -1,0 +1,8 @@
+{
+  "terminal.integrated.confirmOnExit": true,
+  // "tslint.typeCheck": true,
+  // "eslint.provideLintTask": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.tslint": true
+  },
+}
