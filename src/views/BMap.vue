@@ -2,15 +2,21 @@
   <baidu-map
     class="map"
     :ak="bmapKey"
-    :center=center
-    :zoom=zoom
-    @ready=ready
+    :center="viewPort.center"
+    :zoom="viewPort.zoom"
+    :scroll-wheel-zoom="viewPort.enableWheelZoom"
+    :double-click-zoom="viewPort.enableDoubleClickZoom"
+    :continuous-zoom="viewPort.enableContinuousZoom"
+
   >
     <p @click=infoWindowOpen>open info window</p>
     <p @click=showRoute>show route</p>
-    <bm-marker :position="{lng: 116.434, lat: 39.915}" animation="BMAP_ANIMATION_BOUNCE">
-      <bm-label content="marker1" :labelStyle="{color: 'blue', fontSize : '24px'}" :offset="{width: -35, height: 30}"/>
-    </bm-marker>
+    <marker-with-text
+      v-for="(marker, id) in markers"
+      :key="id"
+      v-bind="marker"
+      :onClick="showRoute"
+    ></marker-with-text>
     <bm-info-window
       :position="parking.position"
       :title="parking.name"
@@ -43,17 +49,51 @@ import Vue from 'vue'
 import { mapState, mapGetters, mapMutations } from 'vuex'
 import {GeoPoint, BMapModule} from '@/store/BMap'
 import bmap from 'vue-baidu-map'
+import MarkerWithText from '@/components/MarkerWithText.vue'
 
 Vue.use(bmap, {
   ak: BMapModule.state.bMapKey,
 })
 
+interface Marker {
+  id: number,
+  position: GeoPoint,
+  text: string,
+}
+const markers: Marker[] = [
+  {
+    id: 1,
+    position: {
+      lng: 116.404,
+      lat: 39.915,
+    },
+    text: 'marker1',
+  },
+  {
+    id: 1,
+    position: {
+      lng: 116.404,
+      lat: 39.8615,
+    },
+    text: 'marker2',
+  },
+]
+
 export default Vue.extend({
   name: 'bmap',
+  components: {
+    'marker-with-text': MarkerWithText,
+  },
   data() {
     return {
-      center: {lng: 116.404, lat: 39.915},
-      zoom: 14,
+      viewPort: {
+        center: {lng: 116.404, lat: 39.8815},
+        zoom: 12,
+        enableWheelZoom: false,
+        enableDoubleClickZoom: false,
+        enableContinuousZoom: false,
+      },
+      markers,
       parking: {
         showInfo: true,
         name: 'Recommand parking place 1',
@@ -65,14 +105,14 @@ export default Vue.extend({
       },
       route: {
         show: false,
-        start: {lng: 116.404, lat: 39.915},
+        start: {lng: 116.404, lat: 39.8815},
         end: {lng: 116.444, lat: 39.965},
       },
     }
   },
   methods: {
     ready({BMap, map}: {BMap: any, map: any}) {
-      // console.log(111, BMap, map)
+      console.log(111, BMap, map)
     },
     onSearchResult(results: any) {
       console.log(333, results)
@@ -85,6 +125,7 @@ export default Vue.extend({
     },
     showRoute(e: Event, endPoint: GeoPoint, startPoint: GeoPoint) {
       const newRoute = Object.assign({}, this.route)
+      console.log(123, e, endPoint)
       newRoute.show = true
       if (startPoint) {
         newRoute.start = startPoint
@@ -92,6 +133,8 @@ export default Vue.extend({
       if (endPoint) {
         newRoute.end = endPoint
       }
+      // this.$set(this.route, )
+      this.route = newRoute
     },
     clear() {
       this.parking.stall_state = ''
