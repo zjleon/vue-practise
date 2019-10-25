@@ -1,37 +1,30 @@
 <template>
   <div class="home">
-    <a-button type="primary" @click="addImage">2521421</a-button>
+    <v-button type="primary" @click="addImage">2521421</v-button>
     <h4>{{title}}</h4>
     <img alt="Vue logo" src="../assets/logo.png">
-    <a-list
+    <v-list
       itemLayout="horizontal"
       :dataSource="todos"
     >
-      <a-list-item slot="renderItem" slot-scope="item, index">
-        <a-list-item-meta
-          description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-        >
-          <a slot="title" href="https://vue.ant.design1/">{{item.text}}, {{index}}</a>
-        </a-list-item-meta>
+      <v-list-item slot="renderItem" slot-scope="item, index">
         <img :src="require('@/assets/' + item.image)" />
-      </a-list-item>
-    </a-list>
+      </v-list-item>
+    </v-list>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import HelloWorld from '@/components/HelloWorld.vue' // @ is an alias to /src
-import { Button, List } from 'ant-design-vue'
+import {VBtn, VList, VListItem} from 'vuetify/lib/components'
 import { mapState, mapGetters, mapMutations } from 'vuex'
-
-Vue.use(Button)
-Vue.use(List)
 
 export default Vue.extend({
   name: 'home',
   components: {
-    HelloWorld,
+    'v-button': VBtn,
+    'v-list': VList,
+    'v-list-item': VListItem,
   },
   methods: {
     ...mapMutations('home', [

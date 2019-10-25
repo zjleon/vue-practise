@@ -2,8 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import 'es6-promise/auto'
-import 'ant-design-vue/dist/antd.css'
 import store from './store'
+import vuetify from '@/vuetify'
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -15,6 +15,7 @@ if ('serviceWorker' in navigator) {
 }
 
 new Vue({
+  vuetify,
   router,
   store,
   render: (h: any) => h(App),

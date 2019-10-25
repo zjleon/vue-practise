@@ -4,6 +4,7 @@ const {InjectManifest} = require('workbox-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const fs = require('fs')
 const WebpackOnBuildPlugin = require('on-build-webpack');
+const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
 
 function exportServiceWorkerENV(webpackConfig) {
   fs.writeFile(`${webpackConfig.output.path}/env.js`,
@@ -31,6 +32,7 @@ module.exports = {
   },
   configureWebpack: config => {
     console.log(111, config)
+    config.plugins.push(new VuetifyLoaderPlugin())
     config.plugins.push(new WebpackOnBuildPlugin(function(stats) {
       exportServiceWorkerENV(config)
     }))
