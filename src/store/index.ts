@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import {HomeModule} from './Home'
 import {BMapModule} from './BMap'
-
+import {SearchModule} from './Search'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -20,5 +20,6 @@ export default new Vuex.Store({
   modules: {
     home: HomeModule,
     bMap: BMapModule,
+    search: SearchModule,
   },
 })

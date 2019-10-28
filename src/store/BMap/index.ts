@@ -1,9 +1,7 @@
+import {GeoPoint} from '../common'
+
 interface State {
   bMapKey: string,
-}
-export interface GeoPoint {
-  lng: number,
-  lat: number,
 }
 
 export const BMapModule = {
